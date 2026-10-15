@@ -78,6 +78,34 @@ web/shell.html            trang HTML cho bản web
 
 Engine chỉ làm việc qua `I_Renderer` / `I_Interaction`, nên cùng một luồng game chạy cho cả Terminal, cửa sổ SDL và trình duyệt.
 
+<p align="center"><img src="docs/report/arch.png" width="760" alt="Kiến trúc chương trình"></p>
+
+## Báo cáo
+
+### 📄 [Đọc báo cáo đầy đủ →](docs/REPORT.md)
+
+Báo cáo bài tập lớn trình bày thiết kế Engine, thuật toán bot HARD, giao diện SDL2, phân tích OOP/SOLID và kết quả thực nghiệm. Tóm tắt nhanh:
+
+| Hạng mục | Kết quả |
+|---|---|
+| **Thuật toán bot HARD** | Minimax + cắt tỉa Alpha-Beta, heuristic đếm "cửa sổ" `goal` ô (điểm ±10^k), cập nhật điểm tăng dần, giữ 10 nước tốt nhất mỗi tầng |
+| **Đánh hoàn hảo trên 3×3** | Kiểm thử vét cạn mọi chuỗi nước của đối thủ: 533 ván, 0 thua |
+| **Đối đầu (840 ván)** | Thắng 684 · hoà 149 · thua 7; so với bot cũ 995 dòng: 200 thắng – 75 hoà – 5 thua với mã ngắn hơn một nửa |
+| **Tốc độ** | Tối đa ≈ 0.2 s/nước trên bàn 12×12 |
+| **Kiểm chứng luật thắng** | 168 060 thế cờ ngẫu nhiên, khớp 100% với `Logic::checkWin` |
+
+<details>
+<summary><b>Các mục trong báo cáo</b></summary>
+
+1. [Tổng quan](docs/REPORT.md#1-tổng-quan-overview): luồng thực thi, giao diện đồ hoạ, nội dung cập nhật
+2. [Chi tiết cài đặt](docs/REPORT.md#2-chi-tiết-cài-đặt-implementation-details): Engine, [bot Minimax + Alpha-Beta](docs/REPORT.md#22-bot-mức-hard-minimax--alpha-beta--heuristic), rendering & tương tác SDL, [OOP · SOLID · mẫu thiết kế](docs/REPORT.md#24-trả-lời-câu-hỏi)
+3. [Kết quả thực nghiệm](docs/REPORT.md#3-kết-quả-thực-nghiệm-experiment-results): ảnh Terminal vs SDL, assets, log, [đánh giá bot](docs/REPORT.md#34-đánh-giá-bot-hard-mới)
+4. [Nhận xét và tổng kết](docs/REPORT.md#4-nhận-xét-và-tổng-kết-bài-làm)
+5. [Ghi chú sử dụng AI](docs/REPORT.md#5-ghi-chú-sử-dụng-ai-ai-disclosure)
+6. [Nguồn tham khảo](docs/REPORT.md#6-nguồn-tham-khảo-references)
+
+</details>
+
 ## Ghi chú
 
 Dự án được làm trong khuôn khổ bài tập lớn môn Phương pháp luận lập trình, Viện Trí tuệ nhân tạo, Trường Đại học Công nghệ – ĐHQGHN. Logo trong `assets/` thuộc về các tổ chức tương ứng, chỉ dùng cho mục đích học tập, phi thương mại. Font: Playfair Display (SIL Open Font License).
