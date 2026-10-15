@@ -1,0 +1,18 @@
+# build output
+build/
+build-web/
+public/
+*.exe
+*.o
+*.obj
+/game
+
+# runtime logs
+log.txt
+*.log
+
+# editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

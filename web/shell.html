@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tic-tac-toe: UET vs HUST</title>
+  <style>
+    :root { --bg: #111418; --panel: #1b2027; --text: #e8e8e8; --muted: #9aa3ad; --accent: #ffd700; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text);
+           font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+           display: flex; flex-direction: column; align-items: center; padding: 16px; }
+    h1 { font-size: 1.4rem; margin: 4px 0 2px; color: var(--accent); }
+    .sub { color: var(--muted); margin: 0 0 12px; font-size: .95rem; text-align: center; }
+    #wrap { position: relative; width: 100%; max-width: 1000px; }
+    canvas#canvas { display: block; width: 100%; height: auto; aspect-ratio: 1000 / 700;
+                    background: #000; border-radius: 8px; outline: none; }
+    #status { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+              color: var(--muted); font-size: 1.1rem; pointer-events: none; }
+    .help { max-width: 1000px; width: 100%; margin-top: 14px; background: var(--panel);
+            border-radius: 8px; padding: 12px 16px; line-height: 1.6; font-size: .95rem; }
+    .help b { color: var(--accent); }
+    kbd { background: #2a313a; border-radius: 4px; padding: 1px 6px; font-family: ui-monospace, monospace; }
+  </style>
+</head>
+<body>
+  <h1>Tic-tac-toe: UET (O) vs HUST (X)</h1>
+  <p class="sub">C++ · SDL2 · OOP · bot Minimax + Alpha-Beta, chạy trên trình duyệt bằng WebAssembly</p>
+
+  <div id="wrap">
+    <canvas id="canvas" width="1000" height="700" tabindex="0" oncontextmenu="event.preventDefault()"></canvas>
+    <div id="status">Đang tải game…</div>
+  </div>
+
+  <div class="help">
+    <b>Cách chơi</b> (click vào khung game trước để bàn phím hoạt động):<br>
+    • Màn hình tiêu đề: nhấn <kbd>Enter</kbd>.<br>
+    • Kích thước bàn (3–12) và số quân liên tiếp để thắng: gõ số rồi nhấn <kbd>Enter</kbd> (<kbd>Backspace</kbd> để xoá).<br>
+    • Chế độ: <kbd>1</kbd> người–người, <kbd>2</kbd> người–máy, <kbd>3</kbd> máy–máy, rồi <kbd>Enter</kbd>. Độ khó bot: <kbd>1</kbd> dễ, <kbd>2</kbd> trung bình, <kbd>3</kbd> khó.<br>
+    • Đánh cờ: click chuột trái vào ô trống. Hết ván: <kbd>Space</kbd> để chơi lại.<br>
+    Cần bàn phím, nên chơi trên máy tính.
+  </div>
+
+  <script>
+    var statusEl = document.getElementById('status');
+    var canvas = document.getElementById('canvas');
+    canvas.addEventListener('click', function () { canvas.focus(); });
+    var Module = {
+      arguments: ['-g'],            // luôn chạy giao diện đồ hoạ (SDL)
+      canvas: canvas,
+      // Renderer vẽ từng phần lên khung hình cũ (bàn cờ rồi mới tới banner/ô highlight).
+      // WebGL xoá khung hình sau mỗi lần hiển thị nên dùng renderer phần mềm của SDL,
+      // vốn giữ nguyên nội dung giữa các lần SDL_RenderPresent().
+      preRun: [function () { ENV.SDL_RENDER_DRIVER = 'software'; }],
+      print: function (t) { console.log(t); },
+      printErr: function (t) { console.warn(t); },
+      setStatus: function (t) { statusEl.textContent = t ? 'Đang tải game… ' + t.replace(/^Downloading data\.\.\. /, '') : ''; },
+      monitorRunDependencies: function (left) { if (!left) statusEl.textContent = ''; }
+    };
+    window.onerror = function () { statusEl.textContent = 'Có lỗi khi chạy game, thử tải lại trang.'; };
+  </script>
+  {{{ SCRIPT }}}
+</body>
+</html>
